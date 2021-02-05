@@ -15,46 +15,40 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  double height,width;
+  double height, width;
 
   @override
   void initState() {
     super.initState();
-    loginCheck();    
+    loginCheck();
   }
 
   void loginCheck() async {
-    
     WidgetsFlutterBinding.ensureInitialized();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var loginStatus = prefs.getBool('isLoggedin');
-    
+
     // var loginStatus= false;
     Constants.loggedInUserID = FirebaseAuth.instance.currentUser?.uid;
-if(loginStatus==null)loginStatus=false;
-    if(loginStatus)
-    {
-      Constants.myName=prefs.getString('myName');
-      Constants.myEmail=prefs.getString('myEmail');
-      Constants.loggedInUserID=prefs.getString('loggedInUserID');
+    if (loginStatus == null) loginStatus = false;
+    if (loginStatus) {
+      Constants.myName = prefs.getString('myName');
+      Constants.myEmail = prefs.getString('myEmail');
+      Constants.loggedInUserID = prefs.getString('loggedInUserID');
     }
     var _duartion = new Duration(
       seconds: Constants.SPLASH_SCREEN_TIME,
     );
-    Timer(_duartion, () async{
-      
-    
+    Timer(_duartion, () async {
       Navigator.of(context).pushNamedAndRemoveUntil(
         loginStatus == true ? chatRoute : SignInScreenRoute,
         (route) => false,
       );
-
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
 
@@ -65,29 +59,29 @@ if(loginStatus==null)loginStatus=false;
           Container(
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal:width/10,vertical: height/5
-              ),
-              child: Image.asset(
-                'assets/images/logo.png'
+                  horizontal: width / 10, vertical: height / 5),
+              child: Image.asset('assets/images/logo.png'),
+            ),
+          ),
+          Container(
+            child: Text(
+              "Unique",
+              style: GoogleFonts.poppins(
+                fontSize: 28,
+                fontWeight: FontWeight.w600,
+                color: ColorConstants.kWhiteColor,
               ),
             ),
           ),
           Container(
-            child: Text("Unique",
-            style: GoogleFonts.poppins(
+            child: Text(
+              "Developer",
+              style: GoogleFonts.poppins(
                 fontSize: 28,
                 fontWeight: FontWeight.w600,
                 color: ColorConstants.kWhiteColor,
               ),
-              ),
-          ),Container(
-            child: Text("Developer",
-            style: GoogleFonts.poppins(
-                fontSize: 28,
-                fontWeight: FontWeight.w600,
-                color: ColorConstants.kWhiteColor,
-              ),
-              ),
+            ),
           ),
         ],
       ),

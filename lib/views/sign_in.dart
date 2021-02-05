@@ -81,32 +81,29 @@ class _SignInScreenState extends State<SignInScreen> {
         FirebaseAuth.instance.currentUser.uid,
       );
       pref.setBool('isLoggedin', true);
-      Constants.myName=FirebaseAuth.instance.currentUser.displayName;
-    Constants.myEmail=FirebaseAuth.instance.currentUser.email;
+      Constants.myName = FirebaseAuth.instance.currentUser.displayName;
+      Constants.myEmail = FirebaseAuth.instance.currentUser.email;
       Constants.loggedInUserID = FirebaseAuth.instance.currentUser.uid;
       // var isAdmin=await UserRepository().getUserById(Constants.loggedInUserID);
       // pref.setBool('isAdmin', isAdmin.isAdmin);
       pref.setString('myName', Constants.myName);
       pref.setString('myEmail', Constants.myEmail);
       pref.setString('loggedInUserID', Constants.loggedInUserID);
-      
-      await UserRepository().createUser(
-      UserModel(
-        userName: FirebaseAuth.instance.currentUser.displayName,
-        userEmail: FirebaseAuth.instance.currentUser.email,
-        userID: Constants.loggedInUserID,
-       
-      ),
-    );
 
-SharedPreferences prefs = await SharedPreferences.getInstance();
-    
+      await UserRepository().createUser(
+        UserModel(
+          userName: FirebaseAuth.instance.currentUser.displayName,
+          userEmail: FirebaseAuth.instance.currentUser.email,
+          userID: Constants.loggedInUserID,
+        ),
+      );
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
       Navigator.of(context).pushNamedAndRemoveUntil(
         chatRoute,
         (route) => false,
       );
-
-
     }).catchError((e) {
       _showSnackBar(e.message);
     });
@@ -119,8 +116,7 @@ SharedPreferences prefs = await SharedPreferences.getInstance();
     facebookAuthCredential =
         FacebookAuthProvider.credential(result.accessToken.token);
     // Once signed in, return the UserCredential
-    await FirebaseAuth.instance
-        .signInWithCredential(facebookAuthCredential);
+    await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
 
     _showSnackBar("Login Successfully with Facebook");
     final pref = await SharedPreferences.getInstance();
@@ -129,33 +125,32 @@ SharedPreferences prefs = await SharedPreferences.getInstance();
       FirebaseAuth.instance.currentUser.uid,
     );
     pref.setBool('isLoggedin', true);
-   Constants.myName=FirebaseAuth.instance.currentUser.displayName;
-    Constants.myEmail=FirebaseAuth.instance.currentUser.email;
+    Constants.myName = FirebaseAuth.instance.currentUser.displayName;
+    Constants.myEmail = FirebaseAuth.instance.currentUser.email;
     Constants.loggedInUserID = FirebaseAuth.instance.currentUser.uid;
 
     pref.setString('myName', Constants.myName);
-      pref.setString('myEmail', Constants.myEmail);
-      pref.setString('loggedInUserID', Constants.loggedInUserID);
+    pref.setString('myEmail', Constants.myEmail);
+    pref.setString('loggedInUserID', Constants.loggedInUserID);
     // var isAdmin=await UserRepository().getUserById(Constants.loggedInUserID);
     //   pref.setBool('isAdmin', isAdmin.isAdmin);
-await UserRepository().createUser(
+    await UserRepository().createUser(
       UserModel(
         userName: FirebaseAuth.instance.currentUser.displayName,
         userEmail: FirebaseAuth.instance.currentUser.email,
         userID: Constants.loggedInUserID,
-        
       ),
     );
     pref.setString(
       'loggedInUserPhoto',
       FirebaseAuth.instance.currentUser.photoURL,
     );
-SharedPreferences prefs = await SharedPreferences.getInstance();
-    
-Navigator.of(context).pushNamedAndRemoveUntil(
-        chatRoute,
-        (route) => false,
-      );
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      chatRoute,
+      (route) => false,
+    );
   }
 
   @override
@@ -195,24 +190,24 @@ Navigator.of(context).pushNamedAndRemoveUntil(
             topLeft: Radius.circular(30),
             topRight: Radius.circular(30),
           ),
-          
         ),
         height: height,
         child: Form(
           key: _formKey,
           child: Padding(
-            padding:  EdgeInsets.only(
-              left: height/20,
-              right: height/20,
-              top: height/20,
+            padding: EdgeInsets.only(
+              left: height / 20,
+              right: height / 20,
+              top: height / 20,
             ),
             child: ListView(
               children: [
                 Center(
-        child: Image.asset(
-          'assets/images/logo.png',height: height/5,
-        ),
-      ),
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    height: height / 5,
+                  ),
+                ),
                 SqaureTextFormFieldWidget(
                   controllerName: emailController,
                   lblTxt: "Email",
@@ -224,20 +219,18 @@ Navigator.of(context).pushNamedAndRemoveUntil(
                     }
                     return null;
                   },
-                  onChanged: (String value) {
-                  },
+                  onChanged: (String value) {},
                   onSubmited: (String val) {
                     FocusScope.of(context).nextFocus();
                   },
                 ),
                 SizedBox(
-                  height: height/50,
+                  height: height / 50,
                 ),
                 SqaureTextFormFieldWidget(
                   lblTxt: "Password",
                   controllerName: passwordController,
-                  onChanged: (String value) {
-                  },
+                  onChanged: (String value) {},
                   isObscureTxt: true,
                   autoValidate: true,
                   validator: (value) {
@@ -248,7 +241,7 @@ Navigator.of(context).pushNamedAndRemoveUntil(
                   },
                 ),
                 SizedBox(
-                  height: height/30,
+                  height: height / 30,
                 ),
                 SquareFlatButtonWidget(
                   btnTxt: "Login",
@@ -257,9 +250,7 @@ Navigator.of(context).pushNamedAndRemoveUntil(
                     _onSignIn();
                   },
                 ),
-                SizedBox(
-                  height: height/30
-                ),
+                SizedBox(height: height / 30),
                 Container(
                   width: width * .7,
                   child: GoogleSignInButton(
@@ -270,7 +261,7 @@ Navigator.of(context).pushNamedAndRemoveUntil(
                   ),
                 ),
                 SizedBox(
-                  height: height/50,
+                  height: height / 50,
                 ),
                 Container(
                   width: width * .7,
@@ -281,9 +272,7 @@ Navigator.of(context).pushNamedAndRemoveUntil(
                     centered: true,
                   ),
                 ),
-                SizedBox(
-                 height: height/40
-                ),
+                SizedBox(height: height / 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -291,8 +280,7 @@ Navigator.of(context).pushNamedAndRemoveUntil(
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) =>
-                                ForgotPasswordScreen(),
+                            builder: (context) => ForgotPasswordScreen(),
                           ),
                         );
                       },
@@ -307,9 +295,7 @@ Navigator.of(context).pushNamedAndRemoveUntil(
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: height/50
-                ),
+                SizedBox(height: height / 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -363,26 +349,24 @@ Navigator.of(context).pushNamedAndRemoveUntil(
 
       SharedPreferences preferences = await SharedPreferences.getInstance();
       preferences.setBool('isLoggedin', true);
-      preferences.setString('myName', FirebaseAuth.instance.currentUser.displayName);
+      preferences.setString(
+          'myName', FirebaseAuth.instance.currentUser.displayName);
       preferences.setString('myEmail', FirebaseAuth.instance.currentUser.email);
       preferences.setString('loggedInUserID', Constants.loggedInUserID);
       // var isAdmin=await UserRepository().getUserById(Constants.loggedInUserID);
       // preferences.setBool('isAdmin', isAdmin.isAdmin);
 
-      
-
-await UserRepository().createUser(
-      UserModel(
-        userName: FirebaseAuth.instance.currentUser.displayName,
-        userEmail: FirebaseAuth.instance.currentUser.email,
-        userID: Constants.loggedInUserID,
-        
-      ),
-    );
-SharedPreferences prefs = await SharedPreferences.getInstance();
-    Constants.myName=FirebaseAuth.instance.currentUser.displayName;
-    Constants.myEmail=FirebaseAuth.instance.currentUser.email;
-Navigator.of(context).pushNamedAndRemoveUntil(
+      await UserRepository().createUser(
+        UserModel(
+          userName: FirebaseAuth.instance.currentUser.displayName,
+          userEmail: FirebaseAuth.instance.currentUser.email,
+          userID: Constants.loggedInUserID,
+        ),
+      );
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      Constants.myName = FirebaseAuth.instance.currentUser.displayName;
+      Constants.myEmail = FirebaseAuth.instance.currentUser.email;
+      Navigator.of(context).pushNamedAndRemoveUntil(
         chatRoute,
         (route) => false,
       );

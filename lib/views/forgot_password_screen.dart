@@ -142,7 +142,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       _showSnackBar(e.message);
     }).then((value) {
       Timer(Duration(seconds: 1), () {
-        
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (context) => SignInScreen(),

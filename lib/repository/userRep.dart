@@ -4,7 +4,6 @@ import '../models/userModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class UserRepository {
   final CollectionReference collection =
       FirebaseFirestore.instance.collection('User');
@@ -30,8 +29,6 @@ class UserRepository {
     });
   }
 
-
-
   Future<List<UserModel>> getallUser() async {
     List<UserModel> userList = List();
     final docSnapshot = await collection.get().then((var snapshot) {
@@ -50,7 +47,7 @@ class UserRepository {
 
   Future<UserModel> getUserById(String id) async {
     UserModel userModel;
-    
+
     final docSnapshot = await collection
         .where("userID", isEqualTo: id)
         .get()
@@ -60,7 +57,6 @@ class UserRepository {
         userModel = UserModel.fromMap(
           element.data(),
         );
-        
       });
       return snapshot;
     });
@@ -70,23 +66,24 @@ class UserRepository {
   Future<List<UserModel>> searchByName(String searchField) async {
     UserModel userModel;
     List<UserModel> userList = List();
-    final docSnapshot = await  collection
+    final docSnapshot = await collection
         // .where('userName', isEqualTo: searchField)
-        .getDocuments().then((var snapshot){ print(snapshot);
+        .getDocuments()
+        .then((var snapshot) {
+      print(snapshot);
       snapshot.documents.forEach((element) {
         userModel = UserModel.fromMap(
           element.data(),
         );
-        String name=userModel.userName.toLowerCase();
-        String searchname=searchField.toLowerCase();
-        var email=Constants.myEmail;
-        if(name.contains(searchname) && userModel.userEmail.toLowerCase()!=email.toLowerCase())
-        userList.add(userModel);
+        String name = userModel.userName.toLowerCase();
+        String searchname = searchField.toLowerCase();
+        var email = Constants.myEmail;
+        if (name.contains(searchname) &&
+            userModel.userEmail.toLowerCase() != email.toLowerCase())
+          userList.add(userModel);
       });
-      return snapshot;});
-      return userList;
-
+      return snapshot;
+    });
+    return userList;
   }
-
-
 }

@@ -5,18 +5,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'common/route_generator.dart';
 import 'views/splash.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
-  
-  
 }
 
 class MyApp extends StatelessWidget {
-
-   
-
   @override
   Widget build(BuildContext context) {
     // Firebase.initializeApp();
