@@ -10,6 +10,7 @@ class Chat extends StatefulWidget {
   final String chatChannelId;
   final String partnerName;
   final String partnerEmail;
+  
 
   Chat({this.chatChannelId, this.partnerEmail, this.partnerName});
 
@@ -40,6 +41,7 @@ class _ChatState extends State<Chat> {
                           snapshot.data.documents[index].data()["sendBy"],
                       messageId: snapshot.data.documents[index].id,
                       chatchannelId: widget.chatChannelId,
+                      date: DateTime.fromMillisecondsSinceEpoch(snapshot.data.documents[index].data()["time"]),
                     );
                   })
               : Container();
@@ -317,12 +319,14 @@ class MessageTile extends StatelessWidget {
   final String messageId;
   final String chatchannelId;
   final bool sendByMe;
+  final DateTime date;
 
   MessageTile(
       {@required this.message,
       @required this.sendByMe,
       this.messageId,
-      this.chatchannelId});
+      this.chatchannelId,
+      this.date});
 
   @override
   Widget build(BuildContext context) {
